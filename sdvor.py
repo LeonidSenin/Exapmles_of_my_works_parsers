@@ -28,10 +28,8 @@ def get_links(articul, product, city, city_code):
     # print(url, site)
     if site.status_code == 200:
         soup = BeautifulSoup(site.content, "html.parser")  # разбираем код страницы на элементы
-        # сопоставляет код товара и артикул
-        # print(city)
-        # print(str(articul),soup.find('div', {'class': 'product-code'}).text.split(':')[-1].strip())
         if soup.find('div', {'class': 'product-code'}) != None:
+            # сопоставляет код товара и артикул
             if str(articul) == soup.find('div', {'class': 'product-code'}).text.split(':')[-1].strip():
                 try:
                     price = re.sub(r'\s+', ' ', soup.find('span', {'class': 'main'}).text).replace('₽', '').replace(' ',

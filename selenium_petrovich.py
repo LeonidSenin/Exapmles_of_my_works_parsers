@@ -28,20 +28,16 @@ pd.set_option('max_colwidth', 70)
 
 # Блок иморта глобальных переменных
 # Переменные для dag
-engine = create_engine('postgresql://l_senin:dGiSMKNbae0774j3hG@10.220.75.48:15432/ac_data')
-table_name = 'prmn_027_building_material_prices_petrovich_w'
-schema_name = 'raw_data'
 period = pd.to_datetime(datetime.now().date())  # дата
 month_str = {1: 'Январь', 2: 'Февраль', 3: 'Март', 4: 'Апрель', 5: 'Май', 6: 'Июнь', 7: 'Июль', 8: 'Август',
              9: 'Сентябрь', 10: 'Октябрь', 11: 'Ноябрь', 12: 'Декабрь'}
 
 df_to_db = pd.DataFrame(columns=['indicator', 'region', 'data_source', 'measure_unit', 'periodity', 'indicator_value'])
-
 def get_links(code, city):
     url = f"https://{city}.petrovich.ru/catalog/9576106/{code}/" # ссылка на товар
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(25)
-    # driver.get(url)
+    driver.get(url)
     for request in driver.requests:
         if request.response:
             try:

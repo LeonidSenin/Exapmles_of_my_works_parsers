@@ -40,8 +40,9 @@ def get_links(code, city):
         if request.response:
             try:
                 price = \
-                    driver.find_element(By.CLASS_NAME, 'price-details').text.replace('₽', '').replace('По карте', '').replace(
-                        '\n',' ').strip().split()[0] # Цена товара
+                    driver.find_element(By.CLASS_NAME, 'price-details').text.replace('По карте', '').replace(
+                        '\n','').split('₽')[0].strip().replace(' ','') # Цена товара
+                print(price)
                 measure_unit = driver.find_element(By.CLASS_NAME, 'units-tabs').text.replace('\n', ' ').strip() #
             except:
                 price = np.nan
@@ -56,6 +57,7 @@ def get_links(code, city):
                  'periodity': 'Еженедельно', 'indicator_value': price})  # создаем датафрейм из одной строки
             global df_to_db
             df_to_db = pd.concat([df_to_db, df_row], ignore_index=True)
+    driver.quit()
 
 if __name__ == '__main__':
     list_code = [109624,
